@@ -1,7 +1,5 @@
 package com.sistemaweb.main;
 
-import java.util.Date;
-
 import com.sistemaweb.dao.PessoaDAO;
 import com.sistemaweb.model.Pessoa;
 

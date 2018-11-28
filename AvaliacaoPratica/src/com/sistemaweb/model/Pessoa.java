@@ -26,6 +26,9 @@ public class Pessoa {
 
 	@Column(unique = true)
 	private String empresa;
+	
+	@Column(name="password", nullable=false, unique=false)
+    private String senha;
 
 	@OneToMany
 	private List<Pessoa> amigos;
@@ -78,4 +81,14 @@ public class Pessoa {
 		this.amigos = amigos;
 	}
 
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	
+	
 }
