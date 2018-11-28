@@ -7,26 +7,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Query;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
-@Entity 
+@Entity
 public class Pessoa {
 
 	@Id
-	@GeneratedValue (strategy=GenerationType.IDENTITY)
-	@Column(name="nome", nullable=false, unique=true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
 	private String nome;
-	
-	@Column(name="telefone", nullable=false, unique=true)
+
 	private long telefone;
-	
-	@Column(name="e-mail")
-	@Size (min=10, message="tamanho inválido", max=25)
+
+	@Size(min = 10, message = "tamanho inválido", max = 25)
 	private String email;
-	
-	@Column(name="empresa", nullable=false, unique=true)
+
+	@Column(unique = true)
 	private String empresa;
+
+	@OneToMany
+	private List<Pessoa> amigos;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;
@@ -59,6 +69,13 @@ public class Pessoa {
 	public void setEmpresa(String empresa) {
 		this.empresa = empresa;
 	}
-	
-	
+
+	public List<Pessoa> getAmigos() {
+		return amigos;
+	}
+
+	public void setAmigos(List<Pessoa> amigos) {
+		this.amigos = amigos;
+	}
+
 }

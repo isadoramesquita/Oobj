@@ -2,6 +2,7 @@ package com.sistemaweb.filter;
 
 import java.io.IOException;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -11,9 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LoginFilter {
+public class LoginFilter implements Filter {
 	
-	// PEDIU PRA REMOVER AS OVERRIDES DE CADA MÉTODO - VERIFICAR 
 	
 	
 	public void destroy() {
@@ -21,6 +21,7 @@ public class LoginFilter {
 
 	}
 
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
