@@ -2,11 +2,11 @@ package com.sistemaweb.mb;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.validation.ValidationException;
 
 import com.sistemaweb.dao.PessoaDAO;
 import com.sistemaweb.model.Pessoa;
@@ -15,15 +15,23 @@ import com.sistemaweb.model.Pessoa;
 @ViewScoped
 public class PessoaMB {
 
-	private final String TELA_NOVA_PESSOA = "/telas/novaPessoa.xhtml?faces-redirect=true";
-	private final String TELA_LISTA_PESSOAS = "/telas/listaPessoas?faces-redirect=true";
-	private final String TELA_EDITAR_PESSOA = "/telas/editarPessoa?faces-redirect=true&id=";
+	private final String TELA_NOVA_PESSOA = "/restrito/novoPessoa.xhtml?faces-redirect=true";
+	private final String TELA_LISTA_PESSOAS = "/restrito/listaPessoas?faces-redirect=true";
+	private final String TELA_EDITAR_PESSOA = "/restrito/editarPessoa?faces-redirect=true&id=";
 
 	private PessoaDAO pessoaDAO = new PessoaDAO();
 	private Pessoa pessoa = new Pessoa();
-	private Object pessoaListDb; // foi criado automaticamente, ver com o fábio
 
-	// colocar @PostConstruct? olhar no controle-usuario-crip
+	@PostConstruct
+	public void init() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+
+		String id = (String) facesContext.getExternalContext().getRequestParameterMap().get("id");
+		if (id != null) {
+			Integer idPessoa = Integer.parseInt(id);
+			this.pessoa = pessoaDAO.getPessoa(idPessoa);
+		}
+	}
 
 	public List pessoaListDb() {
 		return pessoaDAO.listarPessoa();
@@ -33,35 +41,26 @@ public class PessoaMB {
 		pessoaDAO.deletarPessoa(pessoa);
 	}
 
-	// observar esseS retornoS
-	public String incluirPessoaDb(Pessoa pessoa) {
+	public String incluirPessoaoDb(Pessoa pessoa) {
 		if (!pessoaDAO.inserirPessoa(pessoa)) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: Essa Pessoa já existe!", "--"));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: Essa pessoa já existe!", null));
+
 			context.getExternalContext().getFlash().setKeepMessages(true);
-
-			return "/telas/novaPessoa.xhtml?faces-redirect=true";
+			return "/restrito/novaPessoa.xhtml?faces-redirect=true";
 		}
-		return "/restrito/main?faces-redirect=true";
+		return "/restrito/listaPessoas?faces-redirect=true";
 	}
 
-	// observar se esse cód está certo pois o controle-usuario está diferente
 	public String paginaEditar(Pessoa pessoa) {
-		return "/telas/editarPessoa?faces-redirect=true&id=" + pessoa.getNome();
+		this.pessoa = pessoa;
+		return "/restrito/editarPessoa?faces-redirect=true&id=" + pessoa.getId();
 	}
 
-	public String editarPessoaDb(Pessoa pessoa) {
+	public String editarUsuarioDb(Pessoa pessoa) {
 		pessoaDAO.alterarPessoa(pessoa);
-		return "/telas/listaPessoas?faces-redirect=true";
-	}
-
-	public PessoaDAO getPessoaDAO() {
-		return pessoaDAO;
-	}
-
-	public void setPessoaDAO(PessoaDAO pessoaDAO) {
-		this.pessoaDAO = pessoaDAO;
+		return "/restrito/listaPessoas?faces-redirect=true";
 	}
 
 	public Pessoa getPessoa() {
@@ -71,10 +70,5 @@ public class PessoaMB {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
-	
-	public void setPessoaListDb(List<Pessoa> pesssoaListDb) {
-		this.pessoaListDb = pessoaListDb;
-	}
-	
+
 }

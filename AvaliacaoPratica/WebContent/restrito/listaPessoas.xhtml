@@ -47,7 +47,7 @@
 			</h:column>
 			
 			<h:column>
-				<f:facet name="header">Endereço</f:facet>
+				<f:facet name="header">CONTATOS</f:facet>
 				<h:commandButton action="#{enderecoManagedBean.paginaEndereco(usuario)}" rendered="#{usuario.endereco.rua eq null}"
 					value="Incluir Endereço" styleClass="btn btn-primary" >
 				</h:commandButton>
@@ -57,18 +57,18 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Update</f:facet>
-				<h:commandButton action="#{usuarioManagedBean.paginaEditar(usuario)}"
+				<h:commandButton action="#{PessoaMB.paginaEditar(pessoa)}"
 					value="Atualizar" styleClass="btn btn-primary">
 				</h:commandButton>
 			</h:column>
 			<h:column>
 				<f:facet name="header">Delete</f:facet>
-				<h:commandButton action="#{usuarioManagedBean.exlcluirUsuarioDb(usuario)}"
+				<h:commandButton action="#{PessoaMB.exlcluirPessoaDb(pessoa)}"
 					value="Deletar" styleClass="btn btn-danger" />
 			</h:column>
 		</h:dataTable>
 		<center>
-			<h:commandButton action="novoUsuario.xhtml?faces-redirect=true"
+			<h:commandButton action="novaPessoa.xhtml?faces-redirect=true"
 				value="Adicionar novo Usuário" styleClass="btn btn-success btnSpace" />
 		</center>
 	</h:form>

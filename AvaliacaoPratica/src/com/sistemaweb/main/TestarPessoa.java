@@ -14,6 +14,13 @@ public class TestarPessoa {
 		pessoa.setTelefone(62999632520L);
 		pessoa.setEmail("teste@teste.com");
 		pessoa.setEmpresa("Oobj");
+		pessoa.setSenha("senha");
+		
+		pessoa.setNome("Teste2");
+		pessoa.setTelefone(6299968766L);
+		pessoa.setEmail("teste2@teste.com");
+		pessoa.setEmpresa("None");
+		pessoa.setSenha("12345");
 		
 		
 		// ver como colocar pessoa.setUltimoAcesso(new Date());

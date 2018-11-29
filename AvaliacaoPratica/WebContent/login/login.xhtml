@@ -13,14 +13,13 @@
 		<p:messages id="messages" />
 		<p:panelGrid columns="2">
 			<p:outputLabel for="nomePessoa" value="Nome Usuário:" />
-			<p:inputText id="nomePessoa" value="#{LoginMB.pessoa.nomePessoa}" />
+			<p:inputText id="nomePessoa" value="#{LoginMB.pessoa.nome}" />
 
 			<p:outputLabel for="senha" value="Senha:" />
 			<p:password id="senha" value="#{LoginMB.pessoa.senha}" />
 
 			<p:commandButton value="Enviar" icon="ui-icon-star"
-				action="#{LoginMB.envia}" ajax="false">
-				<!--                  sem ajax="false" a requisição acontece duas vezes, uma na mesma tela (ajax)-->
+				action="#{LoginMB.enviar}" ajax="false">
 			</p:commandButton>
 		
 		</p:panelGrid>
