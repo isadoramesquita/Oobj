@@ -15,12 +15,9 @@ import com.sistemaweb.model.Pessoa;
 @ViewScoped
 public class PessoaMB {
 
-	private final String TELA_NOVA_PESSOA = "/restrito/novoPessoa.xhtml?faces-redirect=true";
-	private final String TELA_LISTA_PESSOAS = "/restrito/listaPessoas?faces-redirect=true";
-	private final String TELA_EDITAR_PESSOA = "/restrito/editarPessoa?faces-redirect=true&id=";
-
 	private PessoaDAO pessoaDAO = new PessoaDAO();
 	private Pessoa pessoa = new Pessoa();
+	private Pessoa contato = new Pessoa();
 
 	@PostConstruct
 	public void init() {
@@ -37,7 +34,7 @@ public class PessoaMB {
 		return pessoaDAO.listarPessoa();
 	}
 
-	public void exlcluirPessoaDb(Pessoa pessoa) {
+	public void excluirPessoaDb(Pessoa pessoa) {
 		pessoaDAO.deletarPessoa(pessoa);
 	}
 
@@ -52,13 +49,35 @@ public class PessoaMB {
 		}
 		return "/restrito/listaPessoas?faces-redirect=true";
 	}
+	
+	public String adicionarContato(Pessoa pessoa, long idContato) {
+		if (!pessoaDAO.inserirContato(pessoa, idContato)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: Essa pessoa já existe!", null));
+
+			context.getExternalContext().getFlash().setKeepMessages(true);
+			return this.paginaAdicionarContato(pessoa);
+		}
+		return this.paginaContatos(pessoa);
+	}
 
 	public String paginaEditar(Pessoa pessoa) {
 		this.pessoa = pessoa;
 		return "/restrito/editarPessoa?faces-redirect=true&id=" + pessoa.getId();
 	}
+	
+	public String paginaContatos(Pessoa pessoa) {
+		this.pessoa = pessoa;
+		return "/restrito/contatos?faces-redirect=true&id=" + pessoa.getId();
+	}
+	
+	public String paginaAdicionarContato(Pessoa pessoa) {
+		this.pessoa = pessoa;
+		return "/restrito/novoContato?faces-redirect=true&id=" + pessoa.getId();
+	}
 
-	public String editarUsuarioDb(Pessoa pessoa) {
+	public String editarPessoaDb(Pessoa pessoa) {
 		pessoaDAO.alterarPessoa(pessoa);
 		return "/restrito/listaPessoas?faces-redirect=true";
 	}
@@ -71,4 +90,13 @@ public class PessoaMB {
 		this.pessoa = pessoa;
 	}
 
+	public Pessoa getContato() {
+		return contato;
+	}
+
+	public void setContato(Pessoa contato) {
+		this.contato = contato;
+	}
+
+	
 }

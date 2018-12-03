@@ -1,5 +1,7 @@
 package com.sistemaweb.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -7,8 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.common.test.reflection.java.generics.deep.ANN612IssueTest.C;
 
 @Entity
 public class Pessoa {
@@ -21,17 +27,17 @@ public class Pessoa {
 
 	private long telefone;
 
-	@Size(min = 10, message = "tamanho inválido", max = 25)
+	@Size(min = 5, message = "tamanho inválido", max = 45)
 	private String email;
 
-	@Column(unique = true)
+	@Column()
 	private String empresa;
 	
-	@Column(name="password", nullable=false, unique=false)
+	@Column(name="senha", nullable=false, unique=false)
     private String senha;
 
-	@OneToMany
-	private List<Pessoa> amigos;
+	@OneToMany()
+	private List<Pessoa> amigos = new ArrayList<Pessoa>();
 
 	public long getId() {
 		return id;
@@ -79,6 +85,12 @@ public class Pessoa {
 
 	public void setAmigos(List<Pessoa> amigos) {
 		this.amigos = amigos;
+	}
+	
+	public void adicionarAmigo(Pessoa amigo) {
+		List<Pessoa> amigos = this.getAmigos();
+		amigos.add(amigo);
+		this.setAmigos(amigos);
 	}
 
 	public String getSenha() {

@@ -1,5 +1,5 @@
 package com.sistemaweb.model;
 
-public class Pessoa {
+public class Contato {
 
 }

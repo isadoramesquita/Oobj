@@ -24,7 +24,7 @@ public class PessoaDAO implements Serializable {
 
 		try {
 			Pessoa pessoa = (Pessoa) em
-					.createQuery("SELECT u from Pessoa u where u.nomePessoa = :name and u.senha = :senha")
+					.createQuery("SELECT u from Pessoa u where u.nome = :name and u.senha = :senha")
 					.setParameter("name", nomePessoa).setParameter("senha", senha).getSingleResult();
 
 			return pessoa;
@@ -33,7 +33,7 @@ public class PessoaDAO implements Serializable {
 		}
 	}
 
-	public Pessoa getPessoa(int id) {
+	public Pessoa getPessoa(long id) {
 		try {
 			return em.find(Pessoa.class, id);
 		} catch (NoResultException e) {
@@ -70,6 +70,18 @@ public class PessoaDAO implements Serializable {
 			return false;
 		}
 	}
+	
+	public boolean inserirContato(Pessoa pessoa, long idContato) {
+		try {
+			Pessoa contato = this.getPessoa(idContato);
+			pessoa.adicionarAmigo(contato);
+			this.alterarPessoa(pessoa);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	public boolean deletarPessoa(Pessoa pessoa) {
 		if (!transaction.isActive()) {
@@ -96,8 +108,5 @@ public class PessoaDAO implements Serializable {
 		} else {
 			return null;
 		}
-
 	}
-
-	
 }

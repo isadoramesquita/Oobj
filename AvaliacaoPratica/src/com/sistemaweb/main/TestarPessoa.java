@@ -23,7 +23,7 @@ public class TestarPessoa {
 		pessoa.setSenha("12345");
 		
 		
-		// ver como colocar pessoa.setUltimoAcesso(new Date());
+		// Testando conexão com o Banco de Dados
 
 		DB.inserirPessoa(pessoa);
 	}
