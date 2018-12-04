@@ -13,6 +13,10 @@ desenvolvidos em um curso recentemente de Desenvolvedor Java Web. </i>
 
 5. Passo - Executar sripts abaixo
 
+6. Passo - Na tela de Login da aplicação, o campo "Nome Usuário:" e "Senha" devem ser preenchidos de acordo com as informações adicionadas no banco de dados, com nome e sobrenome, em CapsLock seguindo o script.
+
+7. Passo – Não esquecer de subir a aplicação pro servidor Tomcat
+
 
 CREATE TABLE pessoa ( 
 
@@ -60,7 +64,6 @@ INSERT INTO pessoa (NOME,TELEFONE,EMAIL,EMPRESA,SENHA) VALUES ('LUIZ CARLOS', 62
 INSERT INTO pessoa (NOME,TELEFONE,EMAIL,EMPRESA,SENHA) VALUES ('EDITE CARVALHO', 62983231476, 'EDITECARVALHO@HOTMAIL.COM', 'DELL','SENHA11');
 
 </h5
-6. Passo - Na tela de Login da aplicação, o campo "Nome Usuário:" e "Senha" devem ser preenchidos de acordo com as informações adicionadas no banco de dados, com nome e sobrenome, em CapsLock seguindo o script.
-7. Passo – Não esquecer de subir a aplicação pro servidor Tomcat
+
 
 
